@@ -1,0 +1,14 @@
+{
+  "extends": ["react-app", "plugin:jsx-a11y/recommended"],
+  "plugins": ["jsx-a11y"],
+  "rules": {
+    "max-lines": [
+      "warn",
+      { "max": 300, "skipComments": true, "skipBlankLines": true }
+    ],
+    "linebreak-style": "off",
+    "import/extensions": 0,
+    "import/no-extraneous-dependencies": 0,
+    "import/first": 0
+  }
+}
