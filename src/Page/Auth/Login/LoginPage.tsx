@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import ButtonComponent from '../../../Components/Button/ButtonComponent';
 import TextFieldComponent from '../../../Components/TextField/TextFieldComponent';
 import EmailIcon from '../../../Icons/Email-Icon';
@@ -10,11 +10,37 @@ import { userSliceActions } from '../../../Lib/Store/User/User.Slice';
 import { Link } from 'react-router-dom';
 import routes from '../../../Lib/Routes/Routes';
 import { useViewportSize } from '@mantine/hooks';
+import { useMutation, gql } from '@apollo/client';
+
+
+const LOGIN_MUTATION = gql`
+  mutation Login($input: UsersPermissionsLoginInput!) {
+  login(input: $input) {
+    jwt
+    user {
+      id
+      username
+      email
+      confirmed
+      blocked
+      role {
+        id
+        name
+        description
+        type
+      }
+    }
+  }
+}
+
+`;
 
 export default function LoginPage() {
   const loginState = useAppSelector(state => state.user.login);
   const dispatch  = useAppDispatch();
   const { height } = useViewportSize();
+
+  const [loginApi] = useMutation(LOGIN_MUTATION)
 
   const {
     register,
@@ -24,6 +50,19 @@ export default function LoginPage() {
   const onSubmit = (data: LoginPayload) => {
     dispatch(userSliceActions.login(data));
   };
+
+  useEffect(() => {
+    loginApi({
+      variables: {
+        "input": {
+          "identifier": "prosenjit",
+          "password": "8N$3GZQTGFunve$",
+          "provider": "local"
+        }
+      }
+    })
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   return (
     <div style={{ height: `${height}px` }} className='flex justify-center items-center'>

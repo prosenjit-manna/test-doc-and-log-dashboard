@@ -5,17 +5,22 @@ import TrackRedirectLinks from './Components/TrackRedirectLinks';
 
 import { MantineProvider } from '@mantine/core';
 import AppRoutes from './Lib/Routes/AppRoutes';
+import { ApolloProvider } from '@apollo/client';
+import { apolloClient } from 'Lib/ApolloClient';
+
 
 function App() {
   return (
-    <div className='App'>
-      <MantineProvider>
-        <ScrollToTop />
-        <TrackRedirectLinks />
-        <Notifications position='top-right' />
-        <AppRoutes />
-      </MantineProvider>
-    </div>
+    <ApolloProvider client={apolloClient}>
+      <div className='App'>
+        <MantineProvider>
+          <ScrollToTop />
+          <TrackRedirectLinks />
+          <Notifications position='top-right' />
+          <AppRoutes />
+        </MantineProvider>
+      </div>
+    </ApolloProvider>
   );
 }
 
