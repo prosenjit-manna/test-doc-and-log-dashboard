@@ -23,12 +23,6 @@ const LOGIN_MUTATION = graphql(`
       email
       confirmed
       blocked
-      role {
-        id
-        name
-        description
-        type
-      }
     }
   }
 }
