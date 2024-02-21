@@ -10,11 +10,11 @@ import { userSliceActions } from '../../../Lib/Store/User/User.Slice';
 import { Link } from 'react-router-dom';
 import routes from '../../../Lib/Routes/Routes';
 import { useViewportSize } from '@mantine/hooks';
-import { useMutation, gql } from '@apollo/client';
+import { useMutation } from '@apollo/client';
+import { graphql } from '../../../gql'
 
-
-const LOGIN_MUTATION = gql`
-  mutation Login($input: UsersPermissionsLoginInput!) {
+const LOGIN_MUTATION = graphql(`
+ mutation Login($input: UsersPermissionsLoginInput!) {
   login(input: $input) {
     jwt
     user {
@@ -32,8 +32,7 @@ const LOGIN_MUTATION = gql`
     }
   }
 }
-
-`;
+`);
 
 export default function LoginPage() {
   const loginState = useAppSelector(state => state.user.login);
@@ -62,7 +61,7 @@ export default function LoginPage() {
         }
       },
       onCompleted: (data) => {
-        console.log(data);
+        console.log(data.login.jwt);
       }
     })
   };
