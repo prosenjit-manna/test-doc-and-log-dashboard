@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import ButtonComponent from '../../../Components/Button/ButtonComponent';
 import TextFieldComponent from '../../../Components/TextField/TextFieldComponent';
 import EmailIcon from '../../../Icons/Email-Icon';
@@ -49,20 +49,23 @@ export default function LoginPage() {
   
   const onSubmit = (data: LoginPayload) => {
     dispatch(userSliceActions.login(data));
-  };
 
-  useEffect(() => {
+    // "identifier": "prosenjit",
+    // "password": "8N$3GZQTGFunve$",
+
     loginApi({
       variables: {
-        "input": {
-          "identifier": "prosenjit",
-          "password": "8N$3GZQTGFunve$",
-          "provider": "local"
+        input: {
+          identifier: data.username,
+          password: data.password,
+          provider: 'local'
         }
+      },
+      onCompleted: (data) => {
+        console.log(data);
       }
     })
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  };
 
   return (
     <div style={{ height: `${height}px` }} className='flex justify-center items-center'>
