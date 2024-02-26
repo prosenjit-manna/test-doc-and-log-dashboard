@@ -3,15 +3,13 @@ import ButtonComponent from '../../../Components/Button/ButtonComponent';
 import TextFieldComponent from '../../../Components/TextField/TextFieldComponent';
 import EmailIcon from '../../../Icons/Email-Icon';
 import { useForm } from 'react-hook-form';
-import { useAppDispatch, useAppSelector } from '../../../Lib/Store/hooks';
-import { userSliceActions } from '../../../Lib/Store/User/User.Slice';
+import { useAppSelector } from '../../../Lib/Store/hooks';
 import { Link } from 'react-router-dom';
 import routes from '../../../Lib/Routes/Routes';
 import Message from '../../../Components/Message/Message';
 
 export default function ForgetPassWordPage() {
   const forGetPasswordState = useAppSelector(state => state.user.forgetPassword);
-  const dispatch  = useAppDispatch();
 
   const {
     register,
