@@ -26,6 +26,7 @@ export type AppModule = {
   __typename?: 'AppModule';
   createdAt?: Maybe<Scalars['DateTime']['output']>;
   descriptions?: Maybe<Scalars['String']['output']>;
+  project?: Maybe<ProjectEntityResponse>;
   test_cases?: Maybe<TestCaseRelationResponseCollection>;
   title?: Maybe<Scalars['String']['output']>;
   updatedAt?: Maybe<Scalars['DateTime']['output']>;
@@ -62,6 +63,7 @@ export type AppModuleFiltersInput = {
   id?: InputMaybe<IdFilterInput>;
   not?: InputMaybe<AppModuleFiltersInput>;
   or?: InputMaybe<Array<InputMaybe<AppModuleFiltersInput>>>;
+  project?: InputMaybe<ProjectFiltersInput>;
   test_cases?: InputMaybe<TestCaseFiltersInput>;
   title?: InputMaybe<StringFilterInput>;
   updatedAt?: InputMaybe<DateTimeFilterInput>;
@@ -69,6 +71,7 @@ export type AppModuleFiltersInput = {
 
 export type AppModuleInput = {
   descriptions?: InputMaybe<Scalars['String']['input']>;
+  project?: InputMaybe<Scalars['ID']['input']>;
   test_cases?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   title?: InputMaybe<Scalars['String']['input']>;
 };
@@ -303,7 +306,7 @@ export type FloatFilterInput = {
   startsWith?: InputMaybe<Scalars['Float']['input']>;
 };
 
-export type GenericMorph = AppModule | ContentReleasesRelease | ContentReleasesReleaseAction | I18NLocale | TestCase | TestHistory | TestPlan | UploadFile | UploadFolder | UsersPermissionsPermission | UsersPermissionsRole | UsersPermissionsUser;
+export type GenericMorph = AppModule | ContentReleasesRelease | ContentReleasesReleaseAction | I18NLocale | Project | TestCase | TestHistory | TestPlan | UploadFile | UploadFolder | UserMeta | UsersPermissionsPermission | UsersPermissionsRole | UsersPermissionsUser;
 
 export type I18NLocale = {
   __typename?: 'I18NLocale';
@@ -423,11 +426,13 @@ export type Mutation = {
   createAppModule?: Maybe<AppModuleEntityResponse>;
   createContentReleasesRelease?: Maybe<ContentReleasesReleaseEntityResponse>;
   createContentReleasesReleaseAction?: Maybe<ContentReleasesReleaseActionEntityResponse>;
+  createProject?: Maybe<ProjectEntityResponse>;
   createTestCase?: Maybe<TestCaseEntityResponse>;
   createTestHistory?: Maybe<TestHistoryEntityResponse>;
   createTestPlan?: Maybe<TestPlanEntityResponse>;
   createUploadFile?: Maybe<UploadFileEntityResponse>;
   createUploadFolder?: Maybe<UploadFolderEntityResponse>;
+  createUserMeta?: Maybe<UserMetaEntityResponse>;
   /** Create a new role */
   createUsersPermissionsRole?: Maybe<UsersPermissionsCreateRolePayload>;
   /** Create a new user */
@@ -435,11 +440,13 @@ export type Mutation = {
   deleteAppModule?: Maybe<AppModuleEntityResponse>;
   deleteContentReleasesRelease?: Maybe<ContentReleasesReleaseEntityResponse>;
   deleteContentReleasesReleaseAction?: Maybe<ContentReleasesReleaseActionEntityResponse>;
+  deleteProject?: Maybe<ProjectEntityResponse>;
   deleteTestCase?: Maybe<TestCaseEntityResponse>;
   deleteTestHistory?: Maybe<TestHistoryEntityResponse>;
   deleteTestPlan?: Maybe<TestPlanEntityResponse>;
   deleteUploadFile?: Maybe<UploadFileEntityResponse>;
   deleteUploadFolder?: Maybe<UploadFolderEntityResponse>;
+  deleteUserMeta?: Maybe<UserMetaEntityResponse>;
   /** Delete an existing role */
   deleteUsersPermissionsRole?: Maybe<UsersPermissionsDeleteRolePayload>;
   /** Delete an existing user */
@@ -459,11 +466,13 @@ export type Mutation = {
   updateContentReleasesRelease?: Maybe<ContentReleasesReleaseEntityResponse>;
   updateContentReleasesReleaseAction?: Maybe<ContentReleasesReleaseActionEntityResponse>;
   updateFileInfo: UploadFileEntityResponse;
+  updateProject?: Maybe<ProjectEntityResponse>;
   updateTestCase?: Maybe<TestCaseEntityResponse>;
   updateTestHistory?: Maybe<TestHistoryEntityResponse>;
   updateTestPlan?: Maybe<TestPlanEntityResponse>;
   updateUploadFile?: Maybe<UploadFileEntityResponse>;
   updateUploadFolder?: Maybe<UploadFolderEntityResponse>;
+  updateUserMeta?: Maybe<UserMetaEntityResponse>;
   /** Update an existing role */
   updateUsersPermissionsRole?: Maybe<UsersPermissionsUpdateRolePayload>;
   /** Update an existing user */
@@ -494,6 +503,11 @@ export type MutationCreateContentReleasesReleaseActionArgs = {
 };
 
 
+export type MutationCreateProjectArgs = {
+  data: ProjectInput;
+};
+
+
 export type MutationCreateTestCaseArgs = {
   data: TestCaseInput;
 };
@@ -516,6 +530,11 @@ export type MutationCreateUploadFileArgs = {
 
 export type MutationCreateUploadFolderArgs = {
   data: UploadFolderInput;
+};
+
+
+export type MutationCreateUserMetaArgs = {
+  data: UserMetaInput;
 };
 
 
@@ -544,6 +563,11 @@ export type MutationDeleteContentReleasesReleaseActionArgs = {
 };
 
 
+export type MutationDeleteProjectArgs = {
+  id: Scalars['ID']['input'];
+};
+
+
 export type MutationDeleteTestCaseArgs = {
   id: Scalars['ID']['input'];
 };
@@ -565,6 +589,11 @@ export type MutationDeleteUploadFileArgs = {
 
 
 export type MutationDeleteUploadFolderArgs = {
+  id: Scalars['ID']['input'];
+};
+
+
+export type MutationDeleteUserMetaArgs = {
   id: Scalars['ID']['input'];
 };
 
@@ -643,6 +672,12 @@ export type MutationUpdateFileInfoArgs = {
 };
 
 
+export type MutationUpdateProjectArgs = {
+  data: ProjectInput;
+  id: Scalars['ID']['input'];
+};
+
+
 export type MutationUpdateTestCaseArgs = {
   data: TestCaseInput;
   id: Scalars['ID']['input'];
@@ -669,6 +704,12 @@ export type MutationUpdateUploadFileArgs = {
 
 export type MutationUpdateUploadFolderArgs = {
   data: UploadFolderInput;
+  id: Scalars['ID']['input'];
+};
+
+
+export type MutationUpdateUserMetaArgs = {
+  data: UserMetaInput;
   id: Scalars['ID']['input'];
 };
 
@@ -708,6 +749,63 @@ export type PaginationArg = {
   start?: InputMaybe<Scalars['Int']['input']>;
 };
 
+export type Project = {
+  __typename?: 'Project';
+  createdAt?: Maybe<Scalars['DateTime']['output']>;
+  descriptions?: Maybe<Scalars['JSON']['output']>;
+  name?: Maybe<Scalars['String']['output']>;
+  publishedAt?: Maybe<Scalars['DateTime']['output']>;
+  updatedAt?: Maybe<Scalars['DateTime']['output']>;
+  user_meta?: Maybe<UserMetaEntityResponse>;
+};
+
+export type ProjectEntity = {
+  __typename?: 'ProjectEntity';
+  attributes?: Maybe<Project>;
+  id?: Maybe<Scalars['ID']['output']>;
+};
+
+export type ProjectEntityResponse = {
+  __typename?: 'ProjectEntityResponse';
+  data?: Maybe<ProjectEntity>;
+};
+
+export type ProjectEntityResponseCollection = {
+  __typename?: 'ProjectEntityResponseCollection';
+  data: Array<ProjectEntity>;
+  meta: ResponseCollectionMeta;
+};
+
+export type ProjectFiltersInput = {
+  and?: InputMaybe<Array<InputMaybe<ProjectFiltersInput>>>;
+  createdAt?: InputMaybe<DateTimeFilterInput>;
+  descriptions?: InputMaybe<JsonFilterInput>;
+  id?: InputMaybe<IdFilterInput>;
+  name?: InputMaybe<StringFilterInput>;
+  not?: InputMaybe<ProjectFiltersInput>;
+  or?: InputMaybe<Array<InputMaybe<ProjectFiltersInput>>>;
+  publishedAt?: InputMaybe<DateTimeFilterInput>;
+  updatedAt?: InputMaybe<DateTimeFilterInput>;
+  user_meta?: InputMaybe<UserMetaFiltersInput>;
+};
+
+export type ProjectInput = {
+  descriptions?: InputMaybe<Scalars['JSON']['input']>;
+  name?: InputMaybe<Scalars['String']['input']>;
+  publishedAt?: InputMaybe<Scalars['DateTime']['input']>;
+  user_meta?: InputMaybe<Scalars['ID']['input']>;
+};
+
+export type ProjectRelationResponseCollection = {
+  __typename?: 'ProjectRelationResponseCollection';
+  data: Array<ProjectEntity>;
+};
+
+export enum PublicationState {
+  Live = 'LIVE',
+  Preview = 'PREVIEW'
+}
+
 export type Query = {
   __typename?: 'Query';
   appModule?: Maybe<AppModuleEntityResponse>;
@@ -719,6 +817,8 @@ export type Query = {
   i18NLocale?: Maybe<I18NLocaleEntityResponse>;
   i18NLocales?: Maybe<I18NLocaleEntityResponseCollection>;
   me?: Maybe<UsersPermissionsMe>;
+  project?: Maybe<ProjectEntityResponse>;
+  projects?: Maybe<ProjectEntityResponseCollection>;
   testCase?: Maybe<TestCaseEntityResponse>;
   testCases?: Maybe<TestCaseEntityResponseCollection>;
   testHistories?: Maybe<TestHistoryEntityResponseCollection>;
@@ -729,6 +829,8 @@ export type Query = {
   uploadFiles?: Maybe<UploadFileEntityResponseCollection>;
   uploadFolder?: Maybe<UploadFolderEntityResponse>;
   uploadFolders?: Maybe<UploadFolderEntityResponseCollection>;
+  userMeta?: Maybe<UserMetaEntityResponse>;
+  userMetas?: Maybe<UserMetaEntityResponseCollection>;
   usersPermissionsRole?: Maybe<UsersPermissionsRoleEntityResponse>;
   usersPermissionsRoles?: Maybe<UsersPermissionsRoleEntityResponseCollection>;
   usersPermissionsUser?: Maybe<UsersPermissionsUserEntityResponse>;
@@ -780,6 +882,19 @@ export type QueryI18NLocaleArgs = {
 export type QueryI18NLocalesArgs = {
   filters?: InputMaybe<I18NLocaleFiltersInput>;
   pagination?: InputMaybe<PaginationArg>;
+  sort?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+
+export type QueryProjectArgs = {
+  id?: InputMaybe<Scalars['ID']['input']>;
+};
+
+
+export type QueryProjectsArgs = {
+  filters?: InputMaybe<ProjectFiltersInput>;
+  pagination?: InputMaybe<PaginationArg>;
+  publicationState?: InputMaybe<PublicationState>;
   sort?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
 };
 
@@ -840,6 +955,19 @@ export type QueryUploadFolderArgs = {
 export type QueryUploadFoldersArgs = {
   filters?: InputMaybe<UploadFolderFiltersInput>;
   pagination?: InputMaybe<PaginationArg>;
+  sort?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+
+export type QueryUserMetaArgs = {
+  id?: InputMaybe<Scalars['ID']['input']>;
+};
+
+
+export type QueryUserMetasArgs = {
+  filters?: InputMaybe<UserMetaFiltersInput>;
+  pagination?: InputMaybe<PaginationArg>;
+  publicationState?: InputMaybe<PublicationState>;
   sort?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
 };
 
@@ -907,6 +1035,7 @@ export type TestCase = {
   descriptions: Scalars['String']['output'];
   estimation?: Maybe<Scalars['String']['output']>;
   priority?: Maybe<Enum_Testcase_Priority>;
+  project?: Maybe<ProjectEntityResponse>;
   test_histories?: Maybe<TestHistoryRelationResponseCollection>;
   test_plans?: Maybe<TestPlanRelationResponseCollection>;
   title: Scalars['String']['output'];
@@ -970,6 +1099,7 @@ export type TestCaseFiltersInput = {
   not?: InputMaybe<TestCaseFiltersInput>;
   or?: InputMaybe<Array<InputMaybe<TestCaseFiltersInput>>>;
   priority?: InputMaybe<StringFilterInput>;
+  project?: InputMaybe<ProjectFiltersInput>;
   test_histories?: InputMaybe<TestHistoryFiltersInput>;
   test_plans?: InputMaybe<TestPlanFiltersInput>;
   title?: InputMaybe<StringFilterInput>;
@@ -984,6 +1114,7 @@ export type TestCaseInput = {
   descriptions?: InputMaybe<Scalars['String']['input']>;
   estimation?: InputMaybe<Scalars['String']['input']>;
   priority?: InputMaybe<Enum_Testcase_Priority>;
+  project?: InputMaybe<Scalars['ID']['input']>;
   test_histories?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   test_plans?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   title?: InputMaybe<Scalars['String']['input']>;
@@ -999,6 +1130,7 @@ export type TestHistory = {
   Descriptions?: Maybe<Scalars['String']['output']>;
   Instances: Enum_Testhistory_Instances;
   createdAt?: Maybe<Scalars['DateTime']['output']>;
+  project?: Maybe<ProjectEntityResponse>;
   test_case?: Maybe<TestCaseEntityResponse>;
   test_status?: Maybe<Enum_Testhistory_Test_Status>;
   updatedAt?: Maybe<Scalars['DateTime']['output']>;
@@ -1029,6 +1161,7 @@ export type TestHistoryFiltersInput = {
   id?: InputMaybe<IdFilterInput>;
   not?: InputMaybe<TestHistoryFiltersInput>;
   or?: InputMaybe<Array<InputMaybe<TestHistoryFiltersInput>>>;
+  project?: InputMaybe<ProjectFiltersInput>;
   test_case?: InputMaybe<TestCaseFiltersInput>;
   test_status?: InputMaybe<StringFilterInput>;
   updatedAt?: InputMaybe<DateTimeFilterInput>;
@@ -1037,6 +1170,7 @@ export type TestHistoryFiltersInput = {
 export type TestHistoryInput = {
   Descriptions?: InputMaybe<Scalars['String']['input']>;
   Instances?: InputMaybe<Enum_Testhistory_Instances>;
+  project?: InputMaybe<Scalars['ID']['input']>;
   test_case?: InputMaybe<Scalars['ID']['input']>;
   test_status?: InputMaybe<Enum_Testhistory_Test_Status>;
 };
@@ -1052,6 +1186,7 @@ export type TestPlan = {
   Title?: Maybe<Scalars['String']['output']>;
   createdAt?: Maybe<Scalars['DateTime']['output']>;
   descriptions?: Maybe<Scalars['JSON']['output']>;
+  project?: Maybe<ProjectEntityResponse>;
   test_cases?: Maybe<TestCaseRelationResponseCollection>;
   updatedAt?: Maybe<Scalars['DateTime']['output']>;
 };
@@ -1089,6 +1224,7 @@ export type TestPlanFiltersInput = {
   id?: InputMaybe<IdFilterInput>;
   not?: InputMaybe<TestPlanFiltersInput>;
   or?: InputMaybe<Array<InputMaybe<TestPlanFiltersInput>>>;
+  project?: InputMaybe<ProjectFiltersInput>;
   test_cases?: InputMaybe<TestCaseFiltersInput>;
   updatedAt?: InputMaybe<DateTimeFilterInput>;
 };
@@ -1097,6 +1233,7 @@ export type TestPlanInput = {
   Assignee?: InputMaybe<Enum_Testplan_Assignee>;
   Title?: InputMaybe<Scalars['String']['input']>;
   descriptions?: InputMaybe<Scalars['JSON']['input']>;
+  project?: InputMaybe<Scalars['ID']['input']>;
   test_cases?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
 };
 
@@ -1262,6 +1399,57 @@ export type UploadFolderInput = {
 export type UploadFolderRelationResponseCollection = {
   __typename?: 'UploadFolderRelationResponseCollection';
   data: Array<UploadFolderEntity>;
+};
+
+export type UserMeta = {
+  __typename?: 'UserMeta';
+  avatar?: Maybe<UploadFileEntityResponse>;
+  createdAt?: Maybe<Scalars['DateTime']['output']>;
+  projects?: Maybe<ProjectRelationResponseCollection>;
+  publishedAt?: Maybe<Scalars['DateTime']['output']>;
+  updatedAt?: Maybe<Scalars['DateTime']['output']>;
+};
+
+
+export type UserMetaProjectsArgs = {
+  filters?: InputMaybe<ProjectFiltersInput>;
+  pagination?: InputMaybe<PaginationArg>;
+  publicationState?: InputMaybe<PublicationState>;
+  sort?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type UserMetaEntity = {
+  __typename?: 'UserMetaEntity';
+  attributes?: Maybe<UserMeta>;
+  id?: Maybe<Scalars['ID']['output']>;
+};
+
+export type UserMetaEntityResponse = {
+  __typename?: 'UserMetaEntityResponse';
+  data?: Maybe<UserMetaEntity>;
+};
+
+export type UserMetaEntityResponseCollection = {
+  __typename?: 'UserMetaEntityResponseCollection';
+  data: Array<UserMetaEntity>;
+  meta: ResponseCollectionMeta;
+};
+
+export type UserMetaFiltersInput = {
+  and?: InputMaybe<Array<InputMaybe<UserMetaFiltersInput>>>;
+  createdAt?: InputMaybe<DateTimeFilterInput>;
+  id?: InputMaybe<IdFilterInput>;
+  not?: InputMaybe<UserMetaFiltersInput>;
+  or?: InputMaybe<Array<InputMaybe<UserMetaFiltersInput>>>;
+  projects?: InputMaybe<ProjectFiltersInput>;
+  publishedAt?: InputMaybe<DateTimeFilterInput>;
+  updatedAt?: InputMaybe<DateTimeFilterInput>;
+};
+
+export type UserMetaInput = {
+  avatar?: InputMaybe<Scalars['ID']['input']>;
+  projects?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
+  publishedAt?: InputMaybe<Scalars['DateTime']['input']>;
 };
 
 export type UsersPermissionsCreateRolePayload = {
@@ -1478,6 +1666,11 @@ export type UsersPermissionsUserRelationResponseCollection = {
   data: Array<UsersPermissionsUserEntity>;
 };
 
+export type GetCurrentUserQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetCurrentUserQuery = { __typename?: 'Query', me?: { __typename?: 'UsersPermissionsMe', id: string, username: string, email?: string | null, confirmed?: boolean | null, blocked?: boolean | null, role?: { __typename?: 'UsersPermissionsMeRole', id: string, name: string, description?: string | null, type?: string | null } | null } | null };
+
 export type LoginMutationVariables = Exact<{
   input: UsersPermissionsLoginInput;
 }>;
@@ -1486,4 +1679,5 @@ export type LoginMutationVariables = Exact<{
 export type LoginMutation = { __typename?: 'Mutation', login: { __typename?: 'UsersPermissionsLoginPayload', jwt?: string | null, user: { __typename?: 'UsersPermissionsMe', id: string, username: string, email?: string | null, confirmed?: boolean | null, blocked?: boolean | null } } };
 
 
+export const GetCurrentUserDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetCurrentUser"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"me"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"username"}},{"kind":"Field","name":{"kind":"Name","value":"role"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"type"}}]}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"confirmed"}},{"kind":"Field","name":{"kind":"Name","value":"blocked"}}]}}]}}]} as unknown as DocumentNode<GetCurrentUserQuery, GetCurrentUserQueryVariables>;
 export const LoginDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"Login"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UsersPermissionsLoginInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"login"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"jwt"}},{"kind":"Field","name":{"kind":"Name","value":"user"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"username"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"confirmed"}},{"kind":"Field","name":{"kind":"Name","value":"blocked"}}]}}]}}]}}]} as unknown as DocumentNode<LoginMutation, LoginMutationVariables>;

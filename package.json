@@ -9,7 +9,8 @@
     "preview": "vite preview",
     "lint": "eslint src/**/*.ts{,x} --max-warnings=0",
     "lint-staged": "lint-staged",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "codegen:watch": "graphql-codegen --watch"
   },
   "lint-staged": {
     "src/**/*.{ts,tsx}": "eslint src/**/*.ts{,x} --max-warnings=0"

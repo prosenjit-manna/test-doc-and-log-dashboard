@@ -11,22 +11,9 @@ import { Link } from 'react-router-dom';
 import routes from '../../../Lib/Routes/Routes';
 import { useViewportSize } from '@mantine/hooks';
 import { useMutation } from '@apollo/client';
-import { graphql } from '../../../gql'
+import { LOGIN_MUTATION } from './loginMutation';
+import { localStore } from 'Lib/Api/LocalStore';
 
-const LOGIN_MUTATION = graphql(`
- mutation Login($input: UsersPermissionsLoginInput!) {
-  login(input: $input) {
-    jwt
-    user {
-      id
-      username
-      email
-      confirmed
-      blocked
-    }
-  }
-}
-`);
 
 export default function LoginPage() {
   const loginState = useAppSelector(state => state.user.login);
@@ -41,11 +28,6 @@ export default function LoginPage() {
   } = useForm<LoginPayload>();
   
   const onSubmit = (data: LoginPayload) => {
-    dispatch(userSliceActions.login(data));
-
-    // "identifier": "prosenjit",
-    // "password": "8N$3GZQTGFunve$",
-
     loginApi({
       variables: {
         input: {
@@ -55,6 +37,10 @@ export default function LoginPage() {
         }
       },
       onCompleted: (data) => {
+        localStore.update({ token: data.login.jwt })
+        setTimeout(() => {
+          dispatch(userSliceActions.login());  
+        }, 1000);
         console.log(data.login.jwt);
       }
     })

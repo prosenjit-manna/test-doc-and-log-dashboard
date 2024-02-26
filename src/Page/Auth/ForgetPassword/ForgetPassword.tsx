@@ -7,7 +7,6 @@ import { useAppDispatch, useAppSelector } from '../../../Lib/Store/hooks';
 import { userSliceActions } from '../../../Lib/Store/User/User.Slice';
 import { Link } from 'react-router-dom';
 import routes from '../../../Lib/Routes/Routes';
-import { ForgetPasswordPayload } from '../../../Lib/Api/Fake/Users/users.interface';
 import Message from '../../../Components/Message/Message';
 
 export default function ForgetPassWordPage() {
@@ -17,10 +16,10 @@ export default function ForgetPassWordPage() {
   const {
     register,
     handleSubmit,
-  } = useForm<ForgetPasswordPayload>();
+  } = useForm<any>();
   
-  const onSubmit = (data: ForgetPasswordPayload) => {
-    dispatch(userSliceActions.forgetPassword(data));
+  const onSubmit = (data: any) => {
+   console.log(data);
   };
 
   return (

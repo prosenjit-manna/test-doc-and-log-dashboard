@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { ForgetPasswordPayload, LoginPayload, User } from '../../Api/Fake/Users/users.interface';
 import appConfig from '../../appConfig';
+import { GetCurrentUserQuery } from 'gql/graphql';
 
 export interface ForgetPasswordState {
   loading: boolean;
@@ -8,18 +8,15 @@ export interface ForgetPasswordState {
 }
 
 export interface UserSliceState {
-  currentUser: null | User;
+  currentUser: null | GetCurrentUserQuery;
   login: {
     loading: boolean;
   },
   forgetPassword: ForgetPasswordState
 }
 
-const userData = localStorage.getItem(appConfig.storage.user) ? 
-  JSON.parse(localStorage.getItem(appConfig.storage.user) as string) : null;
-
 const initialState: UserSliceState = {
-  currentUser: userData,
+  currentUser: null,
   login: {
     loading: false
   },
@@ -33,26 +30,18 @@ export const userSlice = createSlice({
   name: 'user',
   initialState,
   reducers: {
-    login: (state, { payload }: { payload: LoginPayload }) => {
+    login: (state) => {
       state.login.loading = true;
-      console.log('logging in', state.currentUser, payload);
-    },
-    forgetPassword: (state, { payload }: { payload: ForgetPasswordPayload }) => {
-      state.forgetPassword.loading = true;
-      console.log('forget password initiate', payload);
+      console.log('logging in');
     },
     updateForgetPassword: (state, { payload }: { payload: ForgetPasswordState }) => {
       state.forgetPassword = payload;
       console.log('updateForgetPassword initiate', state, payload);
     },
-    setUser: (state, { payload }: { payload: User }) => {
+    setUser: (state, { payload }: { payload: GetCurrentUserQuery }) => {
+      console.log(state.currentUser, payload);
       state.currentUser = payload;
       state.login.loading = payload ? false : true;
-      if (payload) {
-        localStorage.setItem(appConfig.storage.user, JSON.stringify(payload));
-      } else {
-        localStorage.removeItem(appConfig.storage.user);
-      }
     },
     logout: (state) => {
       state.currentUser = null;
