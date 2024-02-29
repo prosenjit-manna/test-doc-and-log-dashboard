@@ -1,7 +1,8 @@
 import { CodegenConfig } from '@graphql-codegen/cli'
- 
+
+
 const config: CodegenConfig = {
-  schema: 'http://192.168.66.1:1337/graphql',
+  schema: process.env.VITE_API_URL,
   documents: ['src/**/*.tsx', 'src/**/*.ts'],
   ignoreNoDocuments: true, // for better experience with the watcher
   generates: {

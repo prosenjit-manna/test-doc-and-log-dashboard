@@ -10,7 +10,7 @@
     "lint": "eslint src/**/*.ts{,x} --max-warnings=0",
     "lint-staged": "lint-staged",
     "prepare": "husky install",
-    "codegen:watch": "graphql-codegen --watch"
+    "codegen:watch": "dotenv -e .env graphql-codegen --watch"
   },
   "lint-staged": {
     "src/**/*.{ts,tsx}": "eslint src/**/*.ts{,x} --max-warnings=0"
@@ -66,6 +66,7 @@
     "@types/jest": "^29.5.12",
     "@types/lodash": "^4.14.195",
     "@types/mocha": "^10.0.6",
+    "@types/node": "^20.11.23",
     "@types/react": "^18.2.31",
     "@types/react-dom": "^18.2.14",
     "autoprefixer": "^10.4.14",
