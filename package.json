@@ -38,6 +38,7 @@
     "@reduxjs/toolkit": "^1.9.7",
     "@sentry/react": "^7.5.0",
     "@sentry/tracing": "^7.5.0",
+    "@tabler/icons-react": "^2.47.0",
     "@testing-library/react": "^14.2.1",
     "@vitejs/plugin-react": "^4.2.1",
     "axios": "^1.4.0",

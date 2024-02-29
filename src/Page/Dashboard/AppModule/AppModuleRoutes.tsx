@@ -1,6 +1,6 @@
 import React from 'react';
 import { Route } from 'react-router-dom';
-import { appModuleRoutes } from '../../Lib/Routes/AppModuleRoutes';
+import { appModuleRoutes } from '../../../Lib/Routes/AppModuleRoutes';
 
 const AppModulesList = React.lazy(() => import('./AppModulesList'));
 
