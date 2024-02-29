@@ -5,7 +5,7 @@ import { appModuleRoutes } from '../../../Lib/Routes/AppModuleRoutes';
 const AppModulesList = React.lazy(() => import('./AppModulesList'));
 
 export const AppModuleRoutesConfig = [
-  <Route key='PostRoutes'>
+  <Route key='AppModule'>
     <Route path={appModuleRoutes.list.path} element={<AppModulesList />} />
   </Route>,
 ];

@@ -14,8 +14,8 @@ import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/
  */
 const documents = {
     "\n  query GetCurrentUser {\n    me {\n      id\n      username\n      role {\n        id\n        name\n        description\n        type\n      }\n      email\n      confirmed\n      blocked\n    }\n  }\n": types.GetCurrentUserDocument,
-    "\n  query AppModules {\n    appModules {\n      data {\n        id\n        attributes {\n          title\n        }\n      }\n    }\n  }\n": types.AppModulesDocument,
     "\n mutation Login($input: UsersPermissionsLoginInput!) {\n  login(input: $input) {\n    jwt\n    user {\n      id\n      username\n      email\n      confirmed\n      blocked\n    }\n  }\n}\n": types.LoginDocument,
+    "\n  query AppModules {\n    appModules {\n      data {\n        id\n        attributes {\n          title\n        }\n      }\n    }\n  }\n": types.AppModulesDocument,
 };
 
 /**
@@ -39,11 +39,11 @@ export function graphql(source: "\n  query GetCurrentUser {\n    me {\n      id\
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function graphql(source: "\n  query AppModules {\n    appModules {\n      data {\n        id\n        attributes {\n          title\n        }\n      }\n    }\n  }\n"): (typeof documents)["\n  query AppModules {\n    appModules {\n      data {\n        id\n        attributes {\n          title\n        }\n      }\n    }\n  }\n"];
+export function graphql(source: "\n mutation Login($input: UsersPermissionsLoginInput!) {\n  login(input: $input) {\n    jwt\n    user {\n      id\n      username\n      email\n      confirmed\n      blocked\n    }\n  }\n}\n"): (typeof documents)["\n mutation Login($input: UsersPermissionsLoginInput!) {\n  login(input: $input) {\n    jwt\n    user {\n      id\n      username\n      email\n      confirmed\n      blocked\n    }\n  }\n}\n"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function graphql(source: "\n mutation Login($input: UsersPermissionsLoginInput!) {\n  login(input: $input) {\n    jwt\n    user {\n      id\n      username\n      email\n      confirmed\n      blocked\n    }\n  }\n}\n"): (typeof documents)["\n mutation Login($input: UsersPermissionsLoginInput!) {\n  login(input: $input) {\n    jwt\n    user {\n      id\n      username\n      email\n      confirmed\n      blocked\n    }\n  }\n}\n"];
+export function graphql(source: "\n  query AppModules {\n    appModules {\n      data {\n        id\n        attributes {\n          title\n        }\n      }\n    }\n  }\n"): (typeof documents)["\n  query AppModules {\n    appModules {\n      data {\n        id\n        attributes {\n          title\n        }\n      }\n    }\n  }\n"];
 
 export function graphql(source: string) {
   return (documents as any)[source] ?? {};
