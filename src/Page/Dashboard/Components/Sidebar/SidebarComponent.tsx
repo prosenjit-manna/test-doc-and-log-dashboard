@@ -2,6 +2,7 @@ import React from 'react';
 import routes from 'Lib/Routes/Routes';
 import MenuLink from './MenuLink';
 import { postRoutes } from 'Lib/Routes/PostRoutes';
+import { appModuleRoutes } from 'Lib/Routes/AppModuleRoutes';
 
 export default function SidebarComponent() {
   return (
@@ -20,6 +21,12 @@ export default function SidebarComponent() {
           </span>
         </div>
         <nav className='mt-10 px-6 '>
+          <MenuLink
+            text='Modules'
+            activeMenuPaths={appModuleRoutes.matchPath}
+            link={appModuleRoutes.list.fullPath}
+          />
+
           <MenuLink
             text='Posts'
             activeMenuPaths={postRoutes.postMatchingPath}
