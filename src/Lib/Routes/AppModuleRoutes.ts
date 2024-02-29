@@ -4,6 +4,8 @@ import queryString from 'query-string';
 
 const appModulesUrl = 'app-module';
 
+export interface AppModuleRoute { moduleId: string; }
+
 export const appModuleRoutes = {
   matchPath: `${dashboardRoutes.path}/${appModulesUrl}`,
   list: {
@@ -14,6 +16,10 @@ export const appModuleRoutes = {
   },
   module: {
     path: `${appModulesUrl}/:moduleId`,
-    fullPath: ({ moduleId }: any) => `${dashboardRoutes.path}/${appModulesUrl}/${moduleId}`,
+    fullPath: ({ moduleId }: AppModuleRoute ) => `${dashboardRoutes.path}/${appModulesUrl}/${moduleId}`,
+  },
+  moduleAdd: {
+    path: `${appModulesUrl}-add`,
+    fullPath: () => `${dashboardRoutes.path}/${appModulesUrl}-add`,
   },
 };
