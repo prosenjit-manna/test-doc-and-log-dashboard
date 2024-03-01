@@ -4,7 +4,6 @@ import counterReducer from './Counter/Counter';
 import rootSaga from './rootsaga';
 import userReducer from './User/User.Slice';
 import helperSlice from './Helper/Helper.Slice';
-import PostSlice from './Post/Post.slice';
 
 const sagaMiddleware = createSagaMiddleware();
 const middleware = [sagaMiddleware];
@@ -20,7 +19,6 @@ export const store = configureStore({
     counter: counterReducer,
     user: userReducer,
     helper: helperSlice,
-    post: PostSlice
   },
   preloadedState: appState,
   middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(middleware),
