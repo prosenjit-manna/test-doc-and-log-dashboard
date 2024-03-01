@@ -4,9 +4,9 @@ import routes from '../Routes/Routes';
 import { useAppSelector } from '../Store/hooks';
 
 export  function AuthGuard() {
-  const user = useAppSelector(state => state.user.currentUser);
+  const token = useAppSelector(state => state.user.token);
 
-  if (user) {
+  if (token) {
     return <Outlet />;
   } else {
     return <Navigate to={routes.login.path} />;

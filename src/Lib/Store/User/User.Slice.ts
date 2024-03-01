@@ -1,6 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit';
 import appConfig from '../../appConfig';
 import { GetCurrentUserQuery } from 'gql/graphql';
+import { localStore } from 'Lib/Api/LocalStore';
+
+const appData = localStore.get();
 
 export interface ForgetPasswordState {
   loading: boolean;
@@ -9,6 +12,7 @@ export interface ForgetPasswordState {
 
 export interface UserSliceState {
   currentUser: null | GetCurrentUserQuery;
+  token: string | null;
   login: {
     loading: boolean;
   },
@@ -17,6 +21,7 @@ export interface UserSliceState {
 
 const initialState: UserSliceState = {
   currentUser: null,
+  token: appData.token,
   login: {
     loading: false
   },
@@ -46,6 +51,9 @@ export const userSlice = createSlice({
     logout: (state) => {
       state.currentUser = null;
       localStorage.removeItem(appConfig.storage.user);
+    },
+    setToken: (state, { payload }: { payload: string | null }) => {
+      state.token = payload;
     }
   }
 });

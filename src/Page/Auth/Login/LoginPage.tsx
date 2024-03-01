@@ -38,6 +38,7 @@ export default function LoginPage() {
       },
       onCompleted: (data) => {
         localStore.update({ token: data.login.jwt })
+        dispatch(userSliceActions.setToken(data.login.jwt as string));  
         setTimeout(() => {
           dispatch(userSliceActions.login());  
         }, 1000);
