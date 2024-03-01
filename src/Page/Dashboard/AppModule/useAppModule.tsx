@@ -1,4 +1,4 @@
-import { useLazyQuery } from "@apollo/client";
+import { useLazyQuery, useMutation } from "@apollo/client";
 import { appModuleListQuery } from "./graphql/appModuleList.query";
 import { useState } from "react";
 import { AppModulesQuery } from "gql/graphql";
@@ -7,6 +7,9 @@ import { AppModuleListRoute, appModuleRoutes } from "Lib/Routes/AppModuleRoutes"
 import { useNavigate } from "react-router-dom";
 import useDeepCompareEffect from "use-deep-compare-effect";
 import appConfig from "Lib/appConfig";
+import { deleteAppModuleMutation } from "./graphql/deleteAppModule.mutation";
+import { notifications } from "@mantine/notifications";
+import { cloneDeep } from "lodash";
 
 export default function useAppModule() {
   const navigate = useNavigate();
@@ -39,11 +42,29 @@ export default function useAppModule() {
     navigate(appModuleRoutes.list.build({ page: String(v)}))
   }
 
+  const [deleteCallBack ] = useMutation(deleteAppModuleMutation);
+
+  const deleteModule = (id: string) => {
+    deleteCallBack({
+      variables: {
+        id
+      },
+      onCompleted: () => {
+       notifications.show({ message: 'Deleted' });
+       const d = cloneDeep(modules);
+       if (d?.appModules) {
+        d.appModules.data = d?.appModules?.data.filter(e => e.id !== id);
+        setModules(d);
+       }
+      }
+    })
+  }
+
 
   return {
     modules,
-    setModules,
     query,
-    pageChange
+    pageChange,
+    deleteModule
   }
 }

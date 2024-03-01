@@ -1,4 +1,3 @@
-import { useMutation } from '@apollo/client';
 import React from 'react';
 import { Button, Menu, Pagination, Table, Title, rem } from '@mantine/core';
 import {
@@ -8,33 +7,10 @@ import {
 } from '@tabler/icons-react';
 import { Link } from 'react-router-dom';
 import { appModuleRoutes } from 'Lib/Routes/AppModuleRoutes';
-import { deleteAppModuleMutation } from './graphql/deleteAppModule.mutation';
-import { notifications } from '@mantine/notifications';
-import { cloneDeep } from 'lodash';
 import useAppModule from './useAppModule';
 
 export default function AppModule() {
-  const { modules, setModules, query, pageChange } = useAppModule();
-  
-  const [deleteCallBack ] = useMutation(deleteAppModuleMutation);
-
-  const deleteModule = (id: string) => {
-    deleteCallBack({
-      variables: {
-        id
-      },
-      onCompleted: () => {
-       notifications.show({ message: 'Deleted' });
-       const d = cloneDeep(modules);
-       if (d?.appModules) {
-        d.appModules.data = d?.appModules?.data.filter(e => e.id !== id);
-        setModules(d);
-       }
-      }
-    })
-  }
-
- 
+  const { modules, query, pageChange, deleteModule } = useAppModule();
 
   return (
     <div className='p-4  w-full text-left'>
@@ -101,7 +77,7 @@ export default function AppModule() {
         </Table.Tbody>
       </Table>
       
-      {modules?.appModules?.meta.pagination.pageCount && (
+      {(Number(modules?.appModules?.meta?.pagination?.pageCount) > 1) && (
         <Pagination total={modules?.appModules?.meta.pagination.pageCount} value={Number(query.page)} onChange={pageChange} />
       )}
       
