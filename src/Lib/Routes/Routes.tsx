@@ -1,5 +1,4 @@
 import { dashboardRoutes } from './DashboardRoutes';
-import { uiRoutes } from './UiRoutes';
 
 export const routes = {
   home: {
@@ -21,7 +20,6 @@ export const routes = {
     path: '/app',
   },
   dashboard: dashboardRoutes,
-  uiRoutes: uiRoutes
 };
 
 export default routes;

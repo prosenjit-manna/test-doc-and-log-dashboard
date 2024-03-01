@@ -7,8 +7,6 @@ const NotFound = React.lazy(() => import('Page/NotFoundPage'));
 const IndexPage = React.lazy(() => import('Page/Index'));
 
 import { AuthRoutes } from 'Page/Auth/AuthRoutes';
-import { PostRoutes } from 'Page/Dashboard/Post/PostRoutes';
-import { UiRoutes } from 'Page/Dashboard/Ui/UiRoutes';
 import { AppModuleRoutesConfig } from 'Page/Dashboard/AppModule/AppModuleRoutes';
 
 const DashboardPage = React.lazy(() => import('Page/Dashboard/DashboardPage'));
@@ -26,8 +24,6 @@ export default function AppRoutes() {
               <Route path={routes.dashboard.me.path} element={(<ProfilePage />)} />
             </Route>
             
-            {PostRoutes}
-            {UiRoutes}
             {AppModuleRoutesConfig}
           </Route>
           
