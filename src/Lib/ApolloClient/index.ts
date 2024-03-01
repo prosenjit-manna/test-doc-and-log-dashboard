@@ -11,7 +11,7 @@ import appConfig from 'Lib/appConfig';
 
 const httpLink = new BatchHttpLink({
   uri: appConfig.api.graphql,
-  batchMax: 2,
+  batchMax: 1,
   batchInterval: 400,
   batchDebounce: true,
 });
