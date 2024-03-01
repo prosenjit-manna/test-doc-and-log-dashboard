@@ -85,6 +85,7 @@ export default function AppModule() {
           <div className='container w-full mt-4'>
             <Input.Label required>Descriptions</Input.Label>
             <MDEditor
+              data-color-mode="light"
               value={form.getInputProps('descriptions').value}
               onChange={v => form.setFieldValue('descriptions', v || '')}
             />
