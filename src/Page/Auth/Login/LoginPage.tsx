@@ -4,7 +4,7 @@ import TextFieldComponent from '../../../Components/TextField/TextFieldComponent
 import EmailIcon from '../../../Icons/Email-Icon';
 import LockIcon from '../../../Icons/Lock-Icon';
 import { useForm } from 'react-hook-form';
-import { LoginPayload } from '../../../Lib/Api/Fake/Users/users.interface';
+// import { LoginPayload } from '../../../Lib/Api/Fake/Users/users.interface';
 import { useAppDispatch, useAppSelector } from '../../../Lib/Store/hooks';
 import { userSliceActions } from '../../../Lib/Store/User/User.Slice';
 import { Link } from 'react-router-dom';
@@ -25,9 +25,9 @@ export default function LoginPage() {
   const {
     register,
     handleSubmit,
-  } = useForm<LoginPayload>();
+  } = useForm();
   
-  const onSubmit = (data: LoginPayload) => {
+  const onSubmit = (data: any) => {
     loginApi({
       variables: {
         input: {

@@ -2,6 +2,7 @@ import React from 'react';
 import routes from 'Lib/Routes/Routes';
 import MenuLink from './MenuLink';
 import { postRoutes } from 'Lib/Routes/PostRoutes';
+import { projectRoutes } from 'Lib/Routes/ProjectRoutes';
 
 export default function SidebarComponent() {
   return (
@@ -24,6 +25,12 @@ export default function SidebarComponent() {
             text='Posts'
             activeMenuPaths={postRoutes.postMatchingPath}
             link={postRoutes.list.fullPath}
+          />
+
+          <MenuLink
+            text='Projects'
+            activeMenuPaths={projectRoutes.projectMatchingPath}
+            link={projectRoutes.list.fullPath}
           />
 
           <MenuLink

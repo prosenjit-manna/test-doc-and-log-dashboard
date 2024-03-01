@@ -8,6 +8,7 @@ const IndexPage = React.lazy(() => import('Page/Index'));
 
 import { AuthRoutes } from 'Page/Auth/AuthRoutes';
 import { PostRoutes } from 'Page/Dashboard/Post/PostRoutes';
+import { ProjectRoutes } from 'Page/Dashboard/Projects/ProjectRoutes';
 import { UiRoutes } from 'Page/Dashboard/Ui/UiRoutes';
 
 const DashboardPage = React.lazy(() => import('Page/Dashboard/DashboardPage'));
@@ -26,6 +27,7 @@ export default function AppRoutes() {
             </Route>
             
             {PostRoutes}
+            {ProjectRoutes}
             {UiRoutes}
           </Route>
           
