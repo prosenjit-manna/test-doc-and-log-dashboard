@@ -16,7 +16,7 @@ import ErrorBoundary from 'Components/RouterErrorBoundary';
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 root.render(
   <div>
-    {/* <React.StrictMode> */}
+    <React.StrictMode>
       <ErrorBoundary>
       <Provider store={store}>
         <BrowserRouter>
@@ -25,7 +25,7 @@ root.render(
         </BrowserRouter>
       </Provider>
       </ErrorBoundary>
-    {/* </React.StrictMode> */}
+    </React.StrictMode>
   </div>
 );
 

@@ -12,6 +12,7 @@ import useAppModule from './useAppModule';
 export default function AppModule() {
   const { modules, query, pageChange, deleteModule } = useAppModule();
 
+
   return (
     <div className='p-4  w-full text-left'>
       <div className='flex items-center place-content-between'>
