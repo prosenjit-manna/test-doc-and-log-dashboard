@@ -4,7 +4,6 @@ import TextFieldComponent from '../../../Components/TextField/TextFieldComponent
 import EmailIcon from '../../../Icons/Email-Icon';
 import LockIcon from '../../../Icons/Lock-Icon';
 import { useForm } from 'react-hook-form';
-// import { LoginPayload } from '../../../Lib/Api/Fake/Users/users.interface';
 import { useAppDispatch, useAppSelector } from '../../../Lib/Store/hooks';
 import { userSliceActions } from '../../../Lib/Store/User/User.Slice';
 import { Link } from 'react-router-dom';
@@ -13,6 +12,7 @@ import { useViewportSize } from '@mantine/hooks';
 import { useMutation } from '@apollo/client';
 import { LOGIN_MUTATION } from './loginMutation';
 import { localStore } from 'Lib/Api/LocalStore';
+import { LoginFormFields } from './LoginFormFields.interface';
 
 
 export default function LoginPage() {
@@ -25,9 +25,9 @@ export default function LoginPage() {
   const {
     register,
     handleSubmit,
-  } = useForm();
+  } = useForm<LoginFormFields>();
   
-  const onSubmit = (data: any) => {
+  const onSubmit = (data: LoginFormFields) => {
     loginApi({
       variables: {
         input: {
