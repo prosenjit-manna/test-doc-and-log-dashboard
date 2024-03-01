@@ -10,7 +10,7 @@
     "lint": "eslint src/**/*.ts{,x} --max-warnings=0",
     "lint-staged": "lint-staged",
     "prepare": "husky install",
-    "codegen:watch": "dotenv -e .env graphql-codegen --watch"
+    "codegen": "dotenv -e .env graphql-codegen"
   },
   "lint-staged": {
     "src/**/*.{ts,tsx}": "eslint src/**/*.ts{,x} --max-warnings=0"
@@ -33,6 +33,7 @@
     "@faker-js/faker": "^7.2.0",
     "@hookform/resolvers": "^2.9.1",
     "@mantine/core": "^7.1.5",
+    "@mantine/form": "^7.6.1",
     "@mantine/hooks": "^7.1.5",
     "@mantine/notifications": "^7.1.5",
     "@reduxjs/toolkit": "^1.9.7",
@@ -40,6 +41,7 @@
     "@sentry/tracing": "^7.5.0",
     "@tabler/icons-react": "^2.47.0",
     "@testing-library/react": "^14.2.1",
+    "@uiw/react-md-editor": "^4.0.3",
     "@vitejs/plugin-react": "^4.2.1",
     "axios": "^1.4.0",
     "date-fns": "^2.30.0",
