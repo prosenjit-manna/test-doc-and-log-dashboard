@@ -15,16 +15,18 @@ import ErrorBoundary from 'Components/RouterErrorBoundary';
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 root.render(
-  <React.StrictMode>
-    <ErrorBoundary>
-    <Provider store={store}>
-      <BrowserRouter>
-        <ErrorTracking />
-        <App />
-      </BrowserRouter>
-    </Provider>
-    </ErrorBoundary>
-  </React.StrictMode>
+  <div>
+    {/* <React.StrictMode> */}
+      <ErrorBoundary>
+      <Provider store={store}>
+        <BrowserRouter>
+          <ErrorTracking />
+          <App />
+        </BrowserRouter>
+      </Provider>
+      </ErrorBoundary>
+    {/* </React.StrictMode> */}
+  </div>
 );
 
 // If you want to start measuring performance in your app, pass a function

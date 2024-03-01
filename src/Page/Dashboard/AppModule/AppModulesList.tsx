@@ -1,7 +1,6 @@
-import { useMutation, useQuery } from '@apollo/client';
-import React, { useState } from 'react';
-import { appModuleListQuery } from './graphql/appModuleList.query';
-import { Button, Menu, Table, Title, rem } from '@mantine/core';
+import { useMutation } from '@apollo/client';
+import React from 'react';
+import { Button, Menu, Pagination, Table, Title, rem } from '@mantine/core';
 import {
   IconTrash,
   IconEdit,
@@ -11,16 +10,12 @@ import { Link } from 'react-router-dom';
 import { appModuleRoutes } from 'Lib/Routes/AppModuleRoutes';
 import { deleteAppModuleMutation } from './graphql/deleteAppModule.mutation';
 import { notifications } from '@mantine/notifications';
-import { AppModulesQuery } from 'gql/graphql';
 import { cloneDeep } from 'lodash';
+import useAppModule from './useAppModule';
 
 export default function AppModule() {
-  const [modules, setModules] = useState<AppModulesQuery>(); 
-  useQuery(appModuleListQuery, {
-    onCompleted: (d) => {
-      setModules(d)
-    }
-  });
+  const { modules, setModules, query, pageChange } = useAppModule();
+  
   const [deleteCallBack ] = useMutation(deleteAppModuleMutation);
 
   const deleteModule = (id: string) => {
@@ -39,8 +34,10 @@ export default function AppModule() {
     })
   }
 
+ 
+
   return (
-    <div className='p-4 bg-white shadow rounded-lg w-full text-left'>
+    <div className='p-4  w-full text-left'>
       <div className='flex items-center place-content-between'>
         <Title order={1}>App Modules</Title>
         <Link to={appModuleRoutes.moduleAdd.fullPath()}>
@@ -74,9 +71,7 @@ export default function AppModule() {
                       leftSection={
                         <IconEdit style={{ width: rem(14), height: rem(14) }} />
                       }>
-                        
                       Edit
-                     
                     </Menu.Item>
                     </Link>
                     <Menu.Item
@@ -105,6 +100,11 @@ export default function AppModule() {
           ))}
         </Table.Tbody>
       </Table>
+      
+      {modules?.appModules?.meta.pagination.pageCount && (
+        <Pagination total={modules?.appModules?.meta.pagination.pageCount} value={Number(query.page)} onChange={pageChange} />
+      )}
+      
     </div>
   );
 }
