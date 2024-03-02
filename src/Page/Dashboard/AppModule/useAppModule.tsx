@@ -10,8 +10,11 @@ import appConfig from "Lib/appConfig";
 import { deleteAppModuleMutation } from "./graphql/deleteAppModule.mutation";
 import { notifications } from "@mantine/notifications";
 import { cloneDeep } from "lodash";
+import { useDisclosure } from "@mantine/hooks";
+import { apolloClient } from "Lib/ApolloClient";
 
 export default function useAppModule() {
+  const [deleteConfirmationOpended, { open: openDeleteConfirmation, close: closeDeleteConfirmation }] = useDisclosure(false);
   const navigate = useNavigate();
   const [getModules] = useLazyQuery(appModuleListQuery, {
     onCompleted: (d) => {
@@ -55,6 +58,7 @@ export default function useAppModule() {
        if (d?.appModules) {
         d.appModules.data = d?.appModules?.data.filter(e => e.id !== id);
         setModules(d);
+        closeDeleteConfirmation();
        }
       }
     })
@@ -65,6 +69,9 @@ export default function useAppModule() {
     modules,
     query,
     pageChange,
-    deleteModule
+    deleteModule,
+    deleteConfirmationOpended,
+    openDeleteConfirmation,
+    closeDeleteConfirmation
   }
 }
