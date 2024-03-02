@@ -9,6 +9,7 @@
     "linebreak-style": "off",
     "import/extensions": 0,
     "import/no-extraneous-dependencies": 0,
-    "import/first": 0
+    "import/first": 0,
+    "react-hooks/exhaustive-deps": 0
   }
 }

@@ -15,7 +15,7 @@ import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/
 const documents = {
     "\n  query GetCurrentUser {\n    me {\n      id\n      username\n      role {\n        id\n        name\n        description\n        type\n      }\n      email\n      confirmed\n      blocked\n    }\n  }\n": types.GetCurrentUserDocument,
     "\n mutation Login($input: UsersPermissionsLoginInput!) {\n  login(input: $input) {\n    jwt\n    user {\n      id\n      username\n      email\n      confirmed\n      blocked\n    }\n  }\n}\n": types.LoginDocument,
-    "\n  query AppModules {\n    appModules {\n      data {\n        id\n        attributes {\n          title\n        }\n      }\n    }\n  }\n": types.AppModulesDocument,
+    "\n  query AppModules($pagination: PaginationArg) {\n  appModules(pagination: $pagination) {\n    data {\n      id\n      attributes {\n        title\n      }\n    }\n    meta {\n      pagination {\n        total\n        page\n        pageSize\n        pageCount\n      }\n    }\n  }\n}\n": types.AppModulesDocument,
     "\n  mutation CreateAppModule($data: AppModuleInput!) {\n    createAppModule(data: $data) {\n      data {\n        id\n      }\n    }\n  }\n": types.CreateAppModuleDocument,
     "\n  mutation DeleteAppModule($id: ID!) {\n    deleteAppModule(id: $id) {\n      data {\n        id\n      }\n    }\n  }\n": types.DeleteAppModuleDocument,
     "\n  query AppModule($id: ID) {\n    appModule(id: $id) {\n      data {\n        attributes {\n          title\n          descriptions\n        }\n      }\n    }\n  }\n": types.AppModuleDocument,
@@ -47,7 +47,7 @@ export function graphql(source: "\n mutation Login($input: UsersPermissionsLogin
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function graphql(source: "\n  query AppModules {\n    appModules {\n      data {\n        id\n        attributes {\n          title\n        }\n      }\n    }\n  }\n"): (typeof documents)["\n  query AppModules {\n    appModules {\n      data {\n        id\n        attributes {\n          title\n        }\n      }\n    }\n  }\n"];
+export function graphql(source: "\n  query AppModules($pagination: PaginationArg) {\n  appModules(pagination: $pagination) {\n    data {\n      id\n      attributes {\n        title\n      }\n    }\n    meta {\n      pagination {\n        total\n        page\n        pageSize\n        pageCount\n      }\n    }\n  }\n}\n"): (typeof documents)["\n  query AppModules($pagination: PaginationArg) {\n  appModules(pagination: $pagination) {\n    data {\n      id\n      attributes {\n        title\n      }\n    }\n    meta {\n      pagination {\n        total\n        page\n        pageSize\n        pageCount\n      }\n    }\n  }\n}\n"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

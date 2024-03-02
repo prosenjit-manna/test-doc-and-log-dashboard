@@ -1,54 +1,42 @@
-import { useMutation, useQuery } from '@apollo/client';
-import React, { useState } from 'react';
-import { appModuleListQuery } from './graphql/appModuleList.query';
-import { Button, Menu, Table, Title, rem } from '@mantine/core';
+import React from 'react';
 import {
-  IconTrash,
-  IconEdit,
-  IconTextPlus,
-} from '@tabler/icons-react';
+  Button,
+  Menu,
+  Modal,
+  Pagination,
+  Table,
+  Title,
+  rem,
+} from '@mantine/core';
+import { IconTrash, IconEdit, IconTextPlus } from '@tabler/icons-react';
 import { Link } from 'react-router-dom';
 import { appModuleRoutes } from 'Lib/Routes/AppModuleRoutes';
-import { deleteAppModuleMutation } from './graphql/deleteAppModule.mutation';
-import { notifications } from '@mantine/notifications';
-import { AppModulesQuery } from 'gql/graphql';
-import { cloneDeep } from 'lodash';
+import useAppModule from './useAppModule';
 
 export default function AppModule() {
-  const [modules, setModules] = useState<AppModulesQuery>(); 
-  useQuery(appModuleListQuery, {
-    onCompleted: (d) => {
-      setModules(d)
-    }
-  });
-  const [deleteCallBack ] = useMutation(deleteAppModuleMutation);
-
-  const deleteModule = (id: string) => {
-    deleteCallBack({
-      variables: {
-        id
-      },
-      onCompleted: () => {
-       notifications.show({ message: 'Deleted' });
-       const d = cloneDeep(modules);
-       if (d?.appModules) {
-        d.appModules.data = d?.appModules?.data.filter(e => e.id !== id);
-        setModules(d);
-       }
-      }
-    })
-  }
+  const {
+    modules,
+    query,
+    pageChange,
+    deleteModule,
+    deleteConfirmationOpended,
+    openDeleteConfirmation,
+    closeDeleteConfirmation,
+  } = useAppModule();
 
   return (
-    <div className='p-4 bg-white shadow rounded-lg w-full text-left'>
+    <div className='p-4  w-full text-left'>
       <div className='flex items-center place-content-between'>
         <Title order={1}>App Modules</Title>
         <Link to={appModuleRoutes.moduleAdd.fullPath()}>
-        <Button size='xs' variant='light'>Add</Button>
+          <Button
+            size='xs'
+            variant='light'>
+            Add
+          </Button>
         </Link>
-        
       </div>
-      
+
       <Table className='mt-10'>
         <Table.Thead>
           <Table.Tr>
@@ -65,19 +53,26 @@ export default function AppModule() {
                   shadow='md'
                   width={200}>
                   <Menu.Target>
-                    <Button size='xs' variant="light">...</Button>
+                    <Button
+                      size='xs'
+                      variant='light'>
+                      ...
+                    </Button>
                   </Menu.Target>
 
                   <Menu.Dropdown>
-                  <Link  to={appModuleRoutes.module.fullPath({ moduleId: element.id as string })}>
-                    <Menu.Item
-                      leftSection={
-                        <IconEdit style={{ width: rem(14), height: rem(14) }} />
-                      }>
-                        
-                      Edit
-                     
-                    </Menu.Item>
+                    <Link
+                      to={appModuleRoutes.module.fullPath({
+                        moduleId: element.id as string,
+                      })}>
+                      <Menu.Item
+                        leftSection={
+                          <IconEdit
+                            style={{ width: rem(14), height: rem(14) }}
+                          />
+                        }>
+                        Edit
+                      </Menu.Item>
                     </Link>
                     <Menu.Item
                       leftSection={
@@ -89,7 +84,7 @@ export default function AppModule() {
                     </Menu.Item>
 
                     <Menu.Item
-                      onClick={() => deleteModule(element.id as string)}
+                      onClick={openDeleteConfirmation}
                       color='red'
                       leftSection={
                         <IconTrash
@@ -100,11 +95,33 @@ export default function AppModule() {
                     </Menu.Item>
                   </Menu.Dropdown>
                 </Menu>
+                <Modal
+                  opened={deleteConfirmationOpended}
+                  onClose={closeDeleteConfirmation}
+                  title='Are you sure you want to delete?'>
+                  <Title size='h5'>
+                    Your content can not be recovered once you delete.
+                  </Title>
+
+                  <Button
+                    onClick={() => deleteModule(element.id as string)}
+                    className='mt-2 '>
+                    Confirm
+                  </Button>
+                </Modal>
               </Table.Td>
             </Table.Tr>
           ))}
         </Table.Tbody>
       </Table>
+
+      {Number(modules?.appModules?.meta?.pagination?.pageCount) > 1 && (
+        <Pagination
+          total={modules?.appModules?.meta.pagination.pageCount}
+          value={Number(query.page)}
+          onChange={pageChange}
+        />
+      )}
     </div>
   );
 }

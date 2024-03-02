@@ -3,7 +3,9 @@ import React from 'react';
 import * as Sentry from '@sentry/react';
 import { BrowserTracing } from '@sentry/tracing';
 
-if (import.meta.env.NODE_ENV !== 'development') {
+
+if (import.meta.env.MODE !== 'development') {
+  console.log('test');
   Sentry.init({
     dsn: import.meta.env.REACT_APP_SENTRY_DSN || 'https://1a034bd8de2647cf93c113c8b0352f60@o936810.ingest.sentry.io/6551711',
     integrations: [new BrowserTracing()],
