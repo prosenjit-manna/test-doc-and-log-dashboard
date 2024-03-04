@@ -3,8 +3,11 @@ import { Table, Button } from '@mantine/core';
 import { useLazyQuery } from '@apollo/client';
 import { ProjectList } from '../graphql/projectList.query';
 import { ProjectsQuery } from 'gql/graphql';
+import { useNavigate } from 'react-router-dom';
+import { projectRoutes } from 'Lib/Routes/ProjectRoutes';
 
 export default function ProjectLists() {
+  const navigate = useNavigate();
   const [projectList, setProjectList] = useState<ProjectsQuery>();
 
   const [getProjects] = useLazyQuery(ProjectList, {
@@ -23,7 +26,7 @@ export default function ProjectLists() {
     <div className='p-5'>
       <div className='flex flex-col sm:flex-row sm:items-center'>
         <h1 className='flex-1'>List of Projects</h1>
-        <Button variant="filled">Add projects</Button>
+        <Button variant="filled" onClick={() => navigate(projectRoutes.create.fullPath)}>Add projects</Button>
       </div>
       <Table.ScrollContainer minWidth={500} type="native">
       <Table>

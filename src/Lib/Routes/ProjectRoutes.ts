@@ -2,7 +2,7 @@ import { dashboardRoutes } from "./DashboardRoutes";
 import queryString from 'query-string';
 
 export interface ProjectRouteParams { 
-  projectId: string | number
+  projectId: string;
 }
 
 export interface ProjectListRouteQuery { 
@@ -17,8 +17,16 @@ export const projectRoutes = {
     build: (query: ProjectListRouteQuery) =>
       `${dashboardRoutes.path}/projects-list?${queryString.stringify(query)}`,
   },
-  post: {
+  project: {
     path: 'projects/:projectId',
     fullPath: ({ projectId }: ProjectRouteParams) => `${dashboardRoutes.path}/projects/${projectId}`,
   },
+  create: {
+    path: 'projects/create',
+    fullPath: `${dashboardRoutes.path}/projects/create`
+  },
+  update: {
+    path: 'projects/update/:projectId',
+    fullPath: ({ projectId }: ProjectRouteParams) => `${dashboardRoutes.path}/projects/update/${projectId}`,
+  }
 };
