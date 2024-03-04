@@ -43,7 +43,7 @@ export const userSlice = createSlice({
       state.forgetPassword = payload;
       console.log('updateForgetPassword initiate', state, payload);
     },
-    setUser: (state, { payload }: { payload: GetCurrentUserQuery }) => {
+    setUser: (state, { payload }: { payload: GetCurrentUserQuery | null }) => {
       console.log(state.currentUser, payload);
       state.currentUser = payload;
       state.login.loading = payload ? false : true;

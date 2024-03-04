@@ -20,7 +20,7 @@ export default function LoginPage() {
   const dispatch  = useAppDispatch();
   const { height } = useViewportSize();
 
-  const [loginApi] = useMutation(LOGIN_MUTATION)
+  const [loginApi, { loading }] = useMutation(LOGIN_MUTATION)
 
   const {
     register,
@@ -65,7 +65,7 @@ export default function LoginPage() {
             </div>
           </div>
           <div className='flex w-full'>
-            <ButtonComponent type='submit' loading={loginState.loading}>Login</ButtonComponent>
+            <ButtonComponent type='submit' loading={loginState.loading || loading}>Login</ButtonComponent>
           </div>
         </form>
       </div>
