@@ -1,6 +1,6 @@
 import { Box, Button, Group, Input, TextInput, Title } from '@mantine/core';
 import { AppModuleRoute, appModuleRoutes } from 'Lib/Routes/AppModuleRoutes';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useForm } from '@mantine/form';
 import MDEditor from '@uiw/react-md-editor';
@@ -55,7 +55,7 @@ export default function AppModule() {
     
   }
 
-  useState(() => {
+  useEffect(() => {
     if (params.moduleId) {
       getAppModule({
         variables: {

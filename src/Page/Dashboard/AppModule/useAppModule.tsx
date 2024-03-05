@@ -11,7 +11,6 @@ import { deleteAppModuleMutation } from "./graphql/deleteAppModule.mutation";
 import { notifications } from "@mantine/notifications";
 import { cloneDeep } from "lodash";
 import { useDisclosure } from "@mantine/hooks";
-import { apolloClient } from "Lib/ApolloClient";
 
 export default function useAppModule() {
   const [deleteConfirmationOpended, { open: openDeleteConfirmation, close: closeDeleteConfirmation }] = useDisclosure(false);

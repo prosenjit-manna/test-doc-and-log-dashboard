@@ -117,7 +117,7 @@ export default function AppModule() {
 
       {Number(modules?.appModules?.meta?.pagination?.pageCount) > 1 && (
         <Pagination
-          total={modules?.appModules?.meta.pagination.pageCount}
+          total={modules?.appModules?.meta.pagination.pageCount || 0}
           value={Number(query.page)}
           onChange={pageChange}
         />
