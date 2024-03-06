@@ -86,12 +86,15 @@ export default function ProjectForm() {
   };
 
   useEffect(() => {
-    getProjectDetail({
-      variables: {
-        projectId: projectId
-      }
-    });
-  }, []);
+    if (projectId) {
+      getProjectDetail({
+        variables: {
+          projectId: projectId
+        }
+      });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [projectId]);
 
   return (
     <ContentFrame>
