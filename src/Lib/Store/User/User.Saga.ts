@@ -9,6 +9,7 @@ import { GetCurrentUserQuery } from 'gql/graphql';
 
 function* loginMiddleWare(): any {
     try {
+     yield put(userSliceActions.setUser(null));
      const response: ApolloQueryResult<GetCurrentUserQuery> = yield userApi.currentUser();
 
       notifications.show({

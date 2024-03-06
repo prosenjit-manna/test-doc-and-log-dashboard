@@ -8,18 +8,20 @@ import AppRoutes from './Lib/Routes/AppRoutes';
 import { ApolloProvider } from '@apollo/client';
 import { apolloClient } from 'Lib/ApolloClient';
 
+import '@mantine/notifications/styles.css';
 
 function App() {
   return (
     <ApolloProvider client={apolloClient}>
-      <div className='App'>
-        <MantineProvider>
+      <MantineProvider>
+        <Notifications position='top-right'  />
+
+        <div className='App'>
           <ScrollToTop />
           <TrackRedirectLinks />
-          <Notifications position='top-right' />
           <AppRoutes />
-        </MantineProvider>
-      </div>
+        </div>
+      </MantineProvider>
     </ApolloProvider>
   );
 }
