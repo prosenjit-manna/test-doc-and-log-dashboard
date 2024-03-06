@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { Table, Button } from '@mantine/core';
+import { Table } from '@mantine/core';
 import { useLazyQuery } from '@apollo/client';
 import { ProjectList } from '../graphql/projectList.query';
 import { ProjectsQuery } from 'gql/graphql';
 import { useNavigate } from 'react-router-dom';
 import { projectRoutes } from 'Lib/Routes/ProjectRoutes';
+import PageTitleComponent from 'Components/PageTitle/PageTitleComponent';
 
 export default function ProjectLists() {
   const navigate = useNavigate();
@@ -20,13 +21,16 @@ export default function ProjectLists() {
     getProjects();
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
+  console.log('projectList', projectList);
 
   return (
     <div className='p-5'>
       <div className='flex flex-col sm:flex-row sm:items-center'>
-        <h1 className='flex-1'>List of Projects</h1>
-        <Button variant="filled" onClick={() => navigate(projectRoutes.create.fullPath)}>Add projects</Button>
+        <PageTitleComponent 
+        title='List of Projects' 
+        additionalButton={true} 
+        onClick={() => navigate(projectRoutes.create.fullPath)}
+        buttonText='Add projects' />
       </div>
       <Table.ScrollContainer minWidth={500} type="native">
       <Table>

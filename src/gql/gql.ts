@@ -16,7 +16,8 @@ const documents = {
     "\n  query GetCurrentUser {\n    me {\n      id\n      username\n      role {\n        id\n        name\n        description\n        type\n      }\n      email\n      confirmed\n      blocked\n    }\n  }\n": types.GetCurrentUserDocument,
     "\n mutation Login($input: UsersPermissionsLoginInput!) {\n  login(input: $input) {\n    jwt\n    user {\n      id\n      username\n      email\n      confirmed\n      blocked\n    }\n  }\n}\n": types.LoginDocument,
     "\n  mutation CreateProject($project: ProjectInput!) {\n    createProject(data: $project) {\n      data {\n        id\n      }\n    }\n  }\n": types.CreateProjectDocument,
-    "\n  query Projects {\n    projects {\n      data {\n        id\n        attributes {\n          name\n          descriptions\n          publishedAt\n        }\n      }\n    }\n  }\n": types.ProjectsDocument,
+    "\n  query Projects {\n    projects {\n      data {\n        id\n        attributes {\n          name\n          descriptions\n          status\n        }\n      }\n    }\n  }\n": types.ProjectsDocument,
+    "\n  mutation UpdateProject($project: ProjectInput!, $updateProjectId: ID!) {\n    updateProject(id: $updateProjectId, data: $project) {\n      data {\n        id\n      }\n    }\n  }\n": types.UpdateProjectDocument,
 };
 
 /**
@@ -48,7 +49,11 @@ export function graphql(source: "\n  mutation CreateProject($project: ProjectInp
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function graphql(source: "\n  query Projects {\n    projects {\n      data {\n        id\n        attributes {\n          name\n          descriptions\n          publishedAt\n        }\n      }\n    }\n  }\n"): (typeof documents)["\n  query Projects {\n    projects {\n      data {\n        id\n        attributes {\n          name\n          descriptions\n          publishedAt\n        }\n      }\n    }\n  }\n"];
+export function graphql(source: "\n  query Projects {\n    projects {\n      data {\n        id\n        attributes {\n          name\n          descriptions\n          status\n        }\n      }\n    }\n  }\n"): (typeof documents)["\n  query Projects {\n    projects {\n      data {\n        id\n        attributes {\n          name\n          descriptions\n          status\n        }\n      }\n    }\n  }\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n  mutation UpdateProject($project: ProjectInput!, $updateProjectId: ID!) {\n    updateProject(id: $updateProjectId, data: $project) {\n      data {\n        id\n      }\n    }\n  }\n"): (typeof documents)["\n  mutation UpdateProject($project: ProjectInput!, $updateProjectId: ID!) {\n    updateProject(id: $updateProjectId, data: $project) {\n      data {\n        id\n      }\n    }\n  }\n"];
 
 export function graphql(source: string) {
   return (documents as any)[source] ?? {};

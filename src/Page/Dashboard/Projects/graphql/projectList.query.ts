@@ -8,7 +8,7 @@ export const ProjectList = graphql(`
         attributes {
           name
           descriptions
-          publishedAt
+          status
         }
       }
     }
