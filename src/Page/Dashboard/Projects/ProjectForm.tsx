@@ -29,7 +29,7 @@ export default function ProjectForm() {
     onCompleted: (d) => {
       notifications.show({ message: 'Project is created' });
       if (d.createProject?.data?.id) {
-        navigate(projectRoutes.update.fullPath({ projectId: String(d.createProject.data.id) }));
+        navigate(projectRoutes.list.fullPath);
       }
     }, onError: (e) => notifications.show({
       color: 'red',

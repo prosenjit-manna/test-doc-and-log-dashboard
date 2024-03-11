@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { Button, Menu, Modal, Table, Title, rem } from '@mantine/core';
+import { Button, Menu, Modal, Pagination, Table, rem } from '@mantine/core';
 import { useLazyQuery, useMutation } from '@apollo/client';
 import { ProjectList } from './graphql/projectList.query';
-import { ProjectEntity } from 'gql/graphql';
+import { ProjectEntity, ResponseCollectionMeta } from 'gql/graphql';
 import { useNavigate } from 'react-router-dom';
 import { projectRoutes } from 'Lib/Routes/ProjectRoutes';
 import PageTitleComponent from 'Components/PageTitle/PageTitleComponent';
@@ -11,15 +11,19 @@ import { IconEdit, IconTrash, IconViewfinder } from '@tabler/icons-react';
 import ContentFrame from 'Components/ContentFrame';
 import { useDisclosure } from '@mantine/hooks';
 import { deleteProject } from './graphql/deleteProject.mutation';
+import appConfig from 'Lib/appConfig';
 
 export default function ProjectLists() {
   const navigate = useNavigate();
   const [projectList, setProjectList] = useState<ProjectEntity[]>();
   const [deleteModalOpened, { open, close }] = useDisclosure(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [projectMeta, setProjectMeta] = useState<ResponseCollectionMeta>();
 
   const [getProjects] = useLazyQuery(ProjectList, {
     onCompleted: d => {
       setProjectList(d.projects?.data);
+      setProjectMeta(d.projects?.meta);
     }, 
     onError: (e) => notifications.show({
       color: 'red',
@@ -38,9 +42,16 @@ export default function ProjectLists() {
   });
 
   useEffect(() => {
-    getProjects();
+    getProjects({
+      variables: {
+        pagination: {
+          page: currentPage,
+          pageSize: appConfig.pagination.pageSize
+        }
+      }
+    });
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [currentPage]);
 
   return (
     <ContentFrame>
@@ -127,6 +138,16 @@ export default function ProjectLists() {
         </Table.Tbody>
       </Table>
     </Table.ScrollContainer>
+    {projectMeta && projectMeta?.pagination.pageCount > 1 && (
+      <Pagination
+        total={projectMeta?.pagination.pageCount || 0}
+        value={currentPage}
+        onChange={(prev) => {
+          setCurrentPage(prev);
+          navigate(projectRoutes.list.build({ page: prev }));
+        }}
+      />
+    )}
     </ContentFrame>
   )
 }
